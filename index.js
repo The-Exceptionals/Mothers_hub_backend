@@ -37,6 +37,11 @@ data = {
     "Support me",
 };
 
+app.get("/getAllRoutes", (req, res) => {  
+  let get = app._router.stack.filter(r => r.route && r.route.methods.get).map(r => r.route.path);
+  let post = app._router.stack.filter(r => r.route && r.route.methods.post).map(r => r.route.path);
+  res.send({ get: get, post: post });
+});
 app.route("/").get((req, res) => res.json(data));
 
 app.listen(port, "0.0.0.0", () =>
