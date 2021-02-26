@@ -38,11 +38,11 @@ data = {
     "Support me",
 };
 
-app._router.stack.forEach(function(r){
-  if (r.route && r.route.path){
-    console.log(r.route.path)
-  }
-})
+app.get("/getallroutes", (req, res) => {  
+  let get = app._router.stack.filter(r => r.route && r.route.methods.get).map(r => r.route.path);
+  let post = app._router.stack.filter(r => r.route && r.route.methods.post).map(r => r.route.path);
+  res.send({ get: get, post: post });
+});
 
 app.route("/").get((req, res) => res.json(data));
 
