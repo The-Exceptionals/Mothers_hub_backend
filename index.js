@@ -37,13 +37,6 @@ data = {
     "Support me",
 };
 
-  
-  app._router.stack.forEach(function(r){
-    if (r.route && r.route.path){
-      console.log(r.route.path)
-    }
-  });
-
 console.log(listEndpoints(app));
 
 app.route("/").get((req, res) => res.json(data));
