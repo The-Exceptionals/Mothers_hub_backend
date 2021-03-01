@@ -1,4 +1,5 @@
 const express = require("express");
+const listEndpoints = require('express-list-endpoints')
 const mongoose = require("mongoose");
 const port = process.env.PORT || 5000;
 const app = express();
@@ -36,6 +37,12 @@ data = {
   request:
     "Support me",
 };
+
+app.get("/getallroutes", (req, res) => {  
+  let get = app._router.stack.filter(r => r.route && r.route.methods.get).map(r => r.route.path);
+  let post = app._router.stack.filter(r => r.route && r.route.methods.post).map(r => r.route.path);
+  res.send({ get: get, post: post });
+});
 
 app.route("/").get((req, res) => res.json(data));
 
