@@ -30,14 +30,15 @@ router.route("/checkusername/:username").get((req, res) => {
 });
 
 router.route("/login").post((req, res) => {
-  User.findOne({ username: req.body.username }, (err, result) => {
+  console.log(req.body.email);
+  User.findOne({ email: req.body.email }, (err, result) => {
     if (err) return res.status(500).json({ msg: err });
     if (result === null) {
       return res.status(403).json("Username incorrect");
     }
     if (result.password === req.body.password) {
       // here we implement the JWT token functionality
-      let token = jwt.sign({ username: req.body.username }, config.key, {});
+      let token = jwt.sign({ email: req.body.email }, config.key, {});
 
       res.json({
         token: token,
